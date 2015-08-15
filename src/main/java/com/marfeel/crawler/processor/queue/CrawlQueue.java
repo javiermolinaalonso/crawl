@@ -1,4 +1,4 @@
-package com.marfeel.crawler.processor.impl;
+package com.marfeel.crawler.processor.queue;
 
 import com.marfeel.crawler.entities.CrawlResult;
 import com.marfeel.crawler.entities.DocumentResult;

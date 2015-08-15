@@ -1,6 +1,7 @@
 package com.marfeel.crawler.processor.impl;
 
 import com.marfeel.crawler.processor.CrawlerProcessor;
+import com.marfeel.crawler.processor.queue.CrawlQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
