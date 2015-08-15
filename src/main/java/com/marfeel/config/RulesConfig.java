@@ -1,6 +1,7 @@
-package com.marfeel.crawler.processor.document.rules;
+package com.marfeel.config;
 
 import com.marfeel.crawler.processor.document.DocumentProcessor;
+import com.marfeel.crawler.processor.document.rules.JSoupTitleKeywordsMarfeelizableRule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

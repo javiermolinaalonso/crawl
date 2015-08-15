@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration("file:src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml")
-public class AppTests {
+public class IntegrationTests {
 
     private MockMvc mockMvc;
 
@@ -61,8 +61,14 @@ public class AppTests {
         assertEquals("false", elPaisResult.getResponse().getContentAsString());
     }
 
+    @Test
+    public void testPerformance() throws Exception {
+        String urls = readResource("heavyTestUrl.json");
+        mockMvc.perform(post("/crawl").contentType(MediaType.APPLICATION_JSON).content(urls))
+                .andExpect(status().isCreated());
+    }
     private String readResource(String resourceName) throws IOException, URISyntaxException {
-        InputStream resource = AppTests.class.getClassLoader().getResourceAsStream(resourceName);
+        InputStream resource = IntegrationTests.class.getClassLoader().getResourceAsStream(resourceName);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(resource));
         StringBuilder sb = new StringBuilder();
         String currentline = bufferedReader.readLine();
