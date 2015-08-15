@@ -19,10 +19,10 @@ public class DocumentRetrieverTask extends CrawlTask<URI> {
 
     @Override
     protected void doWork(URI uri) {
-        Connection connect = Jsoup.connect(uri.toString());
         try {
+            Connection connect = Jsoup.connect(uri.toString()).timeout(1000);
             queue.put(new DocumentResult(uri, connect.get()));
-        } catch (IOException e) {
+        } catch (Exception e) {
             queue.put(new DocumentResult(uri, null, e));
         }
     }

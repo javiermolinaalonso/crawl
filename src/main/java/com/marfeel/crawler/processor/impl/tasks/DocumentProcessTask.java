@@ -33,7 +33,7 @@ public class DocumentProcessTask extends CrawlTask<DocumentResult> {
     @Override
     protected void doWork(DocumentResult document) {
         CrawlResult result;
-        if (document == null) {
+        if (document.getDocument() == null) {
             //There is an error
             result = CrawlResult.error(document.getUri(), document.getE());
         } else {
