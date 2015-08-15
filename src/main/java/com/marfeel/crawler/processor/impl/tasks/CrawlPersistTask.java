@@ -28,7 +28,6 @@ public class CrawlPersistTask extends CrawlTask<CrawlResult> {
 
     @Override
     protected void doWork(CrawlResult crawlResult) {
-        System.out.println("Processing" + crawlResult);
         crawlMongoRepository.save(crawlResult);
     }
 }
