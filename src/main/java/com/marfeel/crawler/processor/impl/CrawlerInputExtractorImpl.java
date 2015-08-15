@@ -1,5 +1,6 @@
-package com.marfeel.crawler.processor;
+package com.marfeel.crawler.processor.impl;
 
+import com.marfeel.crawler.processor.CrawlerInputExtractor;
 import org.springframework.stereotype.Component;
 
 import java.net.URI;

@@ -1,7 +1,7 @@
-package com.marfeel.crawler.processor;
+package com.marfeel.crawler.processor.impl;
 
 import com.marfeel.crawler.entities.CrawlResult;
-import com.marfeel.crawler.persist.CrawlRepository;
+import com.marfeel.crawler.persist.CrawlMongoRepository;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,9 +14,9 @@ import java.net.URI;
 public class CrawlRunnable implements Runnable {
 
     private final URI uri;
-    private final CrawlRepository callback;
+    private final CrawlMongoRepository callback;
 
-    public CrawlRunnable(URI uri, CrawlRepository callback) {
+    public CrawlRunnable(URI uri, CrawlMongoRepository callback) {
         this.uri = uri;
         this.callback = callback;
     }
@@ -31,7 +31,7 @@ public class CrawlRunnable implements Runnable {
         } catch (Exception e) {
             result = CrawlResult.error(uri, e);
         } finally {
-            callback.persist(result);
+            callback.save(result);
         }
     }
 

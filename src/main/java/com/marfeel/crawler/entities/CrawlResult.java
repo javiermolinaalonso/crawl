@@ -1,5 +1,7 @@
 package com.marfeel.crawler.entities;
 
+import org.springframework.data.annotation.Id;
+
 import java.net.URI;
 
 /**
@@ -7,6 +9,7 @@ import java.net.URI;
  */
 public class CrawlResult {
 
+    @Id
     private final URI uri;
     private final boolean marfeelizable;
     private final Exception e;

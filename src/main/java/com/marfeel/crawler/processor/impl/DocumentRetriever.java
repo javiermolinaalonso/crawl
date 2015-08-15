@@ -1,4 +1,4 @@
-package com.marfeel.crawler.processor;
+package com.marfeel.crawler.processor.impl;
 
 import com.marfeel.crawler.entities.DocumentResult;
 import org.jsoup.Connection;

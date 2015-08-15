@@ -1,7 +1,11 @@
 [
-  {
-    "url": "www.google.es" },
-  {
-    "url": "toshiba.es"
-  }
+  {"url": "http://www.google.es"},
+  {"url": "http://www.toshiba.es"},
+  {"url": "http://www.cincodias.com"},
+  {"url": "http://techcrunch.com"},
+  {"url": "http://www.elpais.com"},
+  {"url": "http://www.lavanguardia.com"},
+  {"url": "http://www.20minutos.com"},
+  {"url": "http://www.rtve.com"},
+  {"url": "http://www.europapress.com"}
 ]

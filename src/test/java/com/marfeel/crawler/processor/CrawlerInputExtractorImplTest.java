@@ -1,5 +1,6 @@
 package com.marfeel.crawler.processor;
 
+import com.marfeel.crawler.processor.impl.CrawlerInputExtractorImpl;
 import org.junit.Before;
 import org.junit.Test;
 

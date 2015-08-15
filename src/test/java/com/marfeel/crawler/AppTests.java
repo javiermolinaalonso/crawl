@@ -9,14 +9,18 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.net.URISyntaxException;
 
+import static org.junit.Assert.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -25,9 +29,9 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @WebAppConfiguration
 @ContextConfiguration("file:src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml")
 public class AppTests {
+
     private MockMvc mockMvc;
 
-    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     protected WebApplicationContext wac;
 
@@ -37,10 +41,24 @@ public class AppTests {
     }
 
     @Test
-    public void simple() throws Exception {
+    public void testGivenSomeUrlWhenCrawlExpectCorrectValues() throws Exception {
         String urls = readResource("testUrl.json");
         mockMvc.perform(post("/crawl").contentType(MediaType.APPLICATION_JSON).content(urls))
                 .andExpect(status().isCreated());
+
+        MvcResult elPaisResult =
+                mockMvc
+                        .perform(get(new URI("/crawl?uri=http://www.elpais.com")).contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk())
+                        .andReturn();
+        MvcResult techCrunchResult =
+                mockMvc
+                        .perform(get(new URI("/crawl?uri=http://techcrunch.com")).contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk())
+                        .andReturn();
+
+        assertEquals("true", techCrunchResult.getResponse().getContentAsString());
+        assertEquals("false", elPaisResult.getResponse().getContentAsString());
     }
 
     private String readResource(String resourceName) throws IOException, URISyntaxException {
@@ -48,7 +66,7 @@ public class AppTests {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(resource));
         StringBuilder sb = new StringBuilder();
         String currentline = bufferedReader.readLine();
-        while(currentline != null) {
+        while (currentline != null) {
             sb.append(currentline);
             currentline = bufferedReader.readLine();
         }

@@ -1,8 +1,9 @@
-package com.marfeel.crawler.processor;
+package com.marfeel.crawler.processor.impl;
 
 import com.marfeel.crawler.entities.CrawlResult;
 import com.marfeel.crawler.entities.DocumentResult;
-import com.marfeel.crawler.persist.CrawlRepository;
+import com.marfeel.crawler.persist.CrawlMongoRepository;
+import com.marfeel.crawler.processor.CrawlerProcessor;
 import com.marfeel.crawler.processor.document.DocumentProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,7 +26,7 @@ public class CrawlerProcessorImpl implements CrawlerProcessor {
     //TODO Externalise this to configuration file
     public static final int N_THREADS = 4;
 
-    @Autowired private CrawlRepository crawlRepository;
+    @Autowired private CrawlMongoRepository crawlRepository;
     @Autowired private DocumentProcessor documentProcessor;
 
     private ExecutorService executorService;
@@ -48,6 +49,11 @@ public class CrawlerProcessorImpl implements CrawlerProcessor {
         List<Future<DocumentResult>> futureDocument = new LinkedList<>();
         documentRetrieverList.forEach(x -> futureDocument.add(executorService.submit(x)));
 
+        marfelizeAndPersist(futureDocument);
+
+    }
+
+    private void marfelizeAndPersist(List<Future<DocumentResult>> futureDocument) {
         for (Future<DocumentResult> doc : futureDocument) {
             CrawlResult result = null;
             try {
@@ -62,7 +68,7 @@ public class CrawlerProcessorImpl implements CrawlerProcessor {
                 result = CrawlResult.error(null, e);
             } finally {
                 if(result != null) {
-                    crawlRepository.persist(result);
+                    crawlRepository.save(result);
                 }
             }
         }
