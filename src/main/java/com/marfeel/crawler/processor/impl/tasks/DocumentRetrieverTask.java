@@ -7,29 +7,33 @@ import org.jsoup.Jsoup;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.TimerTask;
 
 /**
  * Created by javier on 15/08/15.
  */
-public class DocumentRetrieverTask extends TimerTask {
-
-    private final CrawlQueue queue;
+public class DocumentRetrieverTask extends CrawlTask<URI> {
 
     public DocumentRetrieverTask(CrawlQueue queue) {
-        this.queue = queue;
+        super(queue);
     }
 
     @Override
-    public void run() {
-        while (queue.hasAnyUrl()) {
-            URI uri = queue.getPendingUris().pop();
-            Connection connect = Jsoup.connect(uri.toString());
-            try {
-                queue.put(new DocumentResult(uri, connect.get()));
-            } catch (IOException e) {
-                queue.put(new DocumentResult(uri, e));
-            }
+    protected void doWork(URI uri) {
+        Connection connect = Jsoup.connect(uri.toString());
+        try {
+            queue.put(new DocumentResult(uri, connect.get()));
+        } catch (IOException e) {
+            queue.put(new DocumentResult(uri, null, e));
         }
+    }
+
+    @Override
+    protected URI getSomethingToExecute() {
+        return queue.popPendingUris();
+    }
+
+    @Override
+    protected boolean hasSomethingToExecute() {
+        return queue.hasAnyUrl();
     }
 }

@@ -1,4 +1,4 @@
-package com.marfeel.crawler.processor.impl;
+package com.marfeel.crawler;
 
 import com.marfeel.crawler.processor.CrawlerProcessor;
 import com.marfeel.crawler.processor.queue.CrawlQueue;
@@ -13,11 +13,11 @@ import java.util.List;
  * Created by javier on 15/08/15.
  */
 @Component
-public class CrawlerProcessorImpl implements CrawlerProcessor {
+public class CrawlerService implements CrawlerProcessor {
 
     @Autowired private CrawlQueue queue;
 
-    public CrawlerProcessorImpl() {
+    public CrawlerService() {
 
     }
 

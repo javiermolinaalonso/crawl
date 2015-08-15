@@ -19,10 +19,10 @@ public class DocumentResult {
         this.e = null;
     }
 
-    public DocumentResult(URI uri, Exception e) {
+    public DocumentResult(URI uri, Document document, Exception e) {
         this.uri = uri;
         this.e = e;
-        this.document = null;
+        this.document = document;
     }
 
     public URI getUri() {

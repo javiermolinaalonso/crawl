@@ -7,38 +7,43 @@ import com.marfeel.crawler.processor.queue.CrawlQueue;
 import org.jsoup.nodes.Document;
 
 import java.util.List;
-import java.util.TimerTask;
 
 /**
  * Created by javier on 15/08/15.
  */
-public class DocumentProcessTask extends TimerTask {
+public class DocumentProcessTask extends CrawlTask<DocumentResult> {
 
-    private final CrawlQueue queue;
     private final List<MarfeelizableRule<Document>> rules;
 
     public DocumentProcessTask(CrawlQueue queue, List<MarfeelizableRule<Document>> rules) {
-        this.queue = queue;
+        super(queue);
         this.rules = rules;
     }
 
     @Override
-    public void run() {
-        while (queue.hasAnyDocument()) {
-            DocumentResult document = queue.getPendingDocuments().pop();
-            CrawlResult result;
-            if (document == null) {
-                //There is an error
-                result = CrawlResult.error(document.getUri(), document.getE());
+    protected DocumentResult getSomethingToExecute() {
+        return queue.popPendingDocuments();
+    }
+
+    @Override
+    protected boolean hasSomethingToExecute() {
+        return queue.hasAnyDocument();
+    }
+
+    @Override
+    protected void doWork(DocumentResult document) {
+        CrawlResult result;
+        if (document == null) {
+            //There is an error
+            result = CrawlResult.error(document.getUri(), document.getE());
+        } else {
+            if (isMarfeelizable(document.getDocument())) {
+                result = CrawlResult.marfeelizable(document.getUri());
             } else {
-                if (isMarfeelizable(document.getDocument())) {
-                    result = CrawlResult.marfeelizable(document.getUri());
-                } else {
-                    result = CrawlResult.nonMarfeelizable(document.getUri());
-                }
+                result = CrawlResult.nonMarfeelizable(document.getUri());
             }
-            queue.put(result);
         }
+        queue.put(result);
     }
 
     private boolean isMarfeelizable(Document document) {

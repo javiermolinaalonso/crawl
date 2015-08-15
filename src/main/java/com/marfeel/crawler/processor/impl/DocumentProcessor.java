@@ -15,7 +15,7 @@ import java.util.Timer;
  */
 public class DocumentProcessor extends BaseProcessor<DocumentProcessTask> {
 
-    public static final int DELAY = 500;
+    public static final int DELAY = 10;
 
     @Autowired
     CrawlQueue queue;

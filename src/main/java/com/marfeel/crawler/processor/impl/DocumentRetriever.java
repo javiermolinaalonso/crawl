@@ -14,7 +14,7 @@ import java.util.Timer;
 @Component
 public class DocumentRetriever extends BaseProcessor<DocumentRetrieverTask> {
 
-    public static final int PERIOD = 100;
+    public static final int PERIOD = 1000;
 
     @Autowired
     CrawlQueue queue;

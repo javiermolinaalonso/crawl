@@ -5,7 +5,7 @@ import com.marfeel.crawler.entities.DocumentResult;
 import org.springframework.stereotype.Component;
 
 import java.net.URI;
-import java.util.LinkedList;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
  * Created by javier on 15/08/15.
@@ -13,22 +13,22 @@ import java.util.LinkedList;
 @Component
 public class CrawlQueue {
 
-    private final LinkedList<URI> pendingUris;
-    private final LinkedList<DocumentResult> documentResults;
-    private final LinkedList<CrawlResult> crawlResults;
+    private final ConcurrentLinkedDeque<URI> pendingUris;
+    private final ConcurrentLinkedDeque<DocumentResult> documentResults;
+    private final ConcurrentLinkedDeque<CrawlResult> crawlResults;
 
     public CrawlQueue() {
-        pendingUris = new LinkedList<>();
-        documentResults = new LinkedList<>();
-        this.crawlResults = new LinkedList<>();
+        pendingUris = new ConcurrentLinkedDeque<>();
+        documentResults = new ConcurrentLinkedDeque<>();
+        this.crawlResults = new ConcurrentLinkedDeque<>();
     }
 
     public void put(URI uri) {
         pendingUris.addLast(uri);
     }
 
-    public LinkedList<URI> getPendingUris() {
-        return pendingUris;
+    public URI popPendingUris() {
+        return pendingUris.pop();
     }
 
     public boolean hasAnyUrl() {
@@ -43,10 +43,6 @@ public class CrawlQueue {
         return !documentResults.isEmpty();
     }
 
-    public LinkedList<DocumentResult> getPendingDocuments() {
-        return documentResults;
-    }
-
     public void put(CrawlResult result) {
         crawlResults.addLast(result);
     }
@@ -55,8 +51,11 @@ public class CrawlQueue {
         return !crawlResults.isEmpty();
     }
 
+    public CrawlResult popPendingCrawlResults() {
+        return crawlResults.pop();
+    }
 
-    public LinkedList<CrawlResult> getPendingCrawlResults() {
-        return crawlResults;
+    public DocumentResult popPendingDocuments() {
+        return documentResults.pop();
     }
 }

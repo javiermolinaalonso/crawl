@@ -15,7 +15,7 @@ import java.util.Timer;
 @Component
 public class CrawlPersistProcessor extends BaseProcessor<CrawlPersistTask> {
 
-    private static final int DELAY = 500;
+    private static final int DELAY = 10;
 
     @Autowired private CrawlMongoRepository crawlMongoRepository;
 

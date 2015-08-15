@@ -16,16 +16,20 @@ public class JSoupTitleKeywordsMarfeelizableRule implements MarfeelizableRule<Do
 
     @Override
     public boolean isMarfeelizable(Document document) {
-        Elements title = document.getElementsByTag("TITLE");
-        String[] text = title.text().replaceAll("[^a-zA-Z ]", "").split(" ");
-        for(String word : text) {
-            for(String keyword : keywords) {
-                if(keyword.equalsIgnoreCase(word.trim())) {
-                    return true;
+        try {
+            Elements title = document.getElementsByTag("TITLE");
+            String[] text = title.text().replaceAll("[^a-zA-Z ]", "").split(" ");
+            for(String word : text) {
+                for(String keyword : keywords) {
+                    if(keyword.equalsIgnoreCase(word.trim())) {
+                        return true;
+                    }
                 }
             }
+            return false;
+        } catch (Exception e) {
+            return false;
         }
-        return false;
     }
 
 //    try {
