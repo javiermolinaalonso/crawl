@@ -13,18 +13,14 @@ import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 @Configuration
 public class SpringMongoConfig {
 
-    public @Bean
-    MongoDbFactory mongoDbFactory() throws Exception {
-        return new SimpleMongoDbFactory(new MongoClient(), "yourdb");
+    @Bean
+    public MongoDbFactory mongoDbFactory() throws Exception {
+        return new SimpleMongoDbFactory(new MongoClient(), "marfeeldatabase");
     }
 
-    public @Bean
-    MongoTemplate mongoTemplate() throws Exception {
-
-        MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactory());
-
-        return mongoTemplate;
-
+    @Bean
+    public MongoTemplate mongoTemplate() throws Exception {
+        return new MongoTemplate(mongoDbFactory());
     }
 
 }

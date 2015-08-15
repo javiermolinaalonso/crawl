@@ -2,38 +2,12 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
        xsi:schemaLocation=
                "http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
                 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-                http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="com.marfeel.crawler"/>
     <mvc:annotation-driven/>
-
-    <bean id="jSoupTitleKeywordsMarfeelizableRule"
-          class="com.marfeel.crawler.processor.document.rules.JSoupTitleKeywordsMarfeelizableRule">
-        <constructor-arg name="keywords">
-            <array>
-                <value type="java.lang.String">news</value>
-                <value type="java.lang.String">noticias</value>
-            </array>
-        </constructor-arg>
-    </bean>
-
-    <bean id="documentProcessor" class="com.marfeel.crawler.processor.document.DocumentProcessor">
-        <constructor-arg name="rules">
-            <list>
-                <ref bean="jSoupTitleKeywordsMarfeelizableRule"/>
-            </list>
-        </constructor-arg>
-    </bean>
-
-
-    <!-- Database configuration -->
-    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
-    </bean>
 
 </beans>

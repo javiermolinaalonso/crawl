@@ -10,7 +10,7 @@ public class JSoupTitleKeywordsMarfeelizableRule implements MarfeelizableRule<Do
 
     private final String[] keywords;
 
-    public JSoupTitleKeywordsMarfeelizableRule(String[] keywords) {
+    public JSoupTitleKeywordsMarfeelizableRule(String... keywords) {
         this.keywords = keywords;
     }
 
