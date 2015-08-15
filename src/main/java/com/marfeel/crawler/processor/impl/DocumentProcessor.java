@@ -5,7 +5,6 @@ import com.marfeel.crawler.entities.DocumentResult;
 import com.marfeel.crawler.processor.document.rules.MarfeelizableRule;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -15,7 +14,6 @@ import java.util.TimerTask;
 /**
  * Created by javier on 15/08/15.
  */
-@Component
 public class DocumentProcessor {
 
     public static final int DELAY = 500;

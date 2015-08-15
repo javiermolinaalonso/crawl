@@ -26,11 +26,11 @@ public class CrawlerController {
     @Autowired private CrawlMongoRepository repository;
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> executeCrawls(@RequestBody ArrayList<Map<String, String>> request) {
+	public ResponseEntity<String> executeCrawls(@RequestBody ArrayList<Map<String, String>> request) {
         //This is done blocking because it should be fast..
         List<URI> uris = crawlerInputExtractor.extractUris(request);
         crawlerProcessor.bulkProcess(uris);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(String.valueOf(uris.size()), HttpStatus.CREATED);
 	}
 
 
