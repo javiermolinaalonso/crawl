@@ -1,6 +1,5 @@
 package com.marfeel.crawler.processor.document;
 
-import com.marfeel.crawler.exceptions.MarfeelizableException;
 import com.marfeel.crawler.processor.document.rules.MarfeelizableRule;
 import org.jsoup.nodes.Document;
 
@@ -17,7 +16,7 @@ public class DocumentProcessor {
         this.rules = rules;
     }
 
-    public boolean isMarfeelizable(Document document) throws MarfeelizableException {
+    public boolean isMarfeelizable(Document document) {
         return rules.stream().anyMatch(x -> x.isMarfeelizable(document));
     }
 

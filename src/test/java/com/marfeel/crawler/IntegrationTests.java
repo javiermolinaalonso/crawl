@@ -1,6 +1,7 @@
 package com.marfeel.crawler;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,7 @@ public class IntegrationTests {
     }
 
     @Test
+    @Ignore
     public void testPerformance() throws Exception {
         String urls = readResource("heavyTestUrl.json");
         mockMvc.perform(post("/crawl").contentType(MediaType.APPLICATION_JSON).content(urls))
