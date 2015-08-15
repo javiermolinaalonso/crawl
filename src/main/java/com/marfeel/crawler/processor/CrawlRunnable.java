@@ -5,7 +5,6 @@ import com.marfeel.crawler.persist.CrawlRepository;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 import java.net.URI;
 
@@ -28,14 +27,7 @@ public class CrawlRunnable implements Runnable {
         try {
             Connection connect = Jsoup.connect(uri.toString());
             Document document = connect.get();
-            Elements title = document.getElementsByTag("TITLE");
 
-            System.out.println(title);
-            if(title.contains("news") || title.contains("noticias")) {
-                result = CrawlResult.marfeelizable(uri);
-            } else {
-                result = CrawlResult.nonMarfeelizable(uri);
-            }
         } catch (Exception e) {
             result = CrawlResult.error(uri, e);
         } finally {

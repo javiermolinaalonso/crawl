@@ -26,7 +26,7 @@ public class CrawlerController {
 	public ResponseEntity<String> executeCrawls(@RequestBody ArrayList<Map<String, String>> request) {
         List<URI> uris = crawlerInputExtractor.extractUris(request);
         crawlerProcessor.bulkProcess(uris);
-        return new ResponseEntity<String>("Hello", HttpStatus.CREATED);
+        return new ResponseEntity<>("Hello", HttpStatus.CREATED);
 	}
 
 
