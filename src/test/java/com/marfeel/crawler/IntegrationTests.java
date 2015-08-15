@@ -47,6 +47,8 @@ public class IntegrationTests {
         mockMvc.perform(post("/crawl").contentType(MediaType.APPLICATION_JSON).content(urls))
                 .andExpect(status().isCreated());
 
+        Thread.sleep(1000); //Wait for all timers to save
+
         MvcResult elPaisResult =
                 mockMvc
                         .perform(get(new URI("/crawl?uri=http://www.elpais.com")).contentType(MediaType.APPLICATION_JSON))
